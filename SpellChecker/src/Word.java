@@ -31,13 +31,12 @@ public class Word {
     }
 
     /**
-      get an string array for each character from the left
+     * get an string array for each character from the left
      * @return string array for each character from the left
      */
     String [] getLeftChars(){
         return leftChars;
     }
-
 
     public static void main(String[] args) {
         Word w = new Word("vqqhahaha");
