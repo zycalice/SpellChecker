@@ -5,7 +5,7 @@ public class Word {
     private String[] leftChars;
     private String[] rightChars;
     private int numChars;
-
+ 
     /**
      * Word constructor
      * @param wordInput, a word in string format
