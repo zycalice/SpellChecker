@@ -2,8 +2,6 @@ import java.util.Arrays;
 
 public class Word {
     private String word;
-    private String[] leftChars;
-    private String[] rightChars;
     private int numChars;
  
     /**
@@ -13,24 +11,6 @@ public class Word {
     public Word(String wordInput){
         //save word, array of characters, and number of characters
         word = wordInput;
-        leftChars = wordInput.split("");
-        numChars = leftChars.length;
-    }
-
-    /**
-     * get an string array for each character from the right (reverse ordered)
-     * @return string array for each character from the right (reverse ordered)
-     */
-    public String[] getRightChars(){
-        if (rightChars!=null){
-            return rightChars;
-        }
-        rightChars = new String[numChars];
-
-        for (int i = 0; i < numChars; i++){
-            rightChars[i] = leftChars[numChars-i-1];
-        }
-        return rightChars;
     }
 
     /**
@@ -38,7 +18,21 @@ public class Word {
      * @return string array for each character from the left
      */
     public String [] getLeftChars(){
-        return leftChars;
+        return word.split("");
+    }
+
+    /**
+     * get an string array for each character from the right (reverse ordered)
+     * @return string array for each character from the right (reverse ordered)
+     */
+    public String[] getRightChars(){
+        numChars = getLeftChars().length;
+        String [] rightChars = new String[numChars];
+
+        for (int i = 0; i < numChars; i++){
+            rightChars[i] = getLeftChars()[numChars-i-1];
+        }
+        return rightChars;
     }
 
 

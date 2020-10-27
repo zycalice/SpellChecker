@@ -41,7 +41,8 @@ public class ReadWrite {
     //main class for testing (temp)
     public static void main(String[] args) {
         ReadWrite rw = new ReadWrite();
-        //System.out.println(rw.path);
+        System.out.println(rw.path);
+//        System.out.println(rw.path);
         System.out.println(rw.readDictionary("engDictionary.txt")[200]);
     }
 }
