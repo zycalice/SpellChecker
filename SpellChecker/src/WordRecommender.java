@@ -5,7 +5,8 @@ public class WordRecommender {
 
     public WordRecommender(String fileName){
         ReadWrite rw = new ReadWrite();
-        
+        dictionary = fileName;
+        dictionaryWords = rw.readDictionary(fileName);
     }
 
 

@@ -22,6 +22,9 @@ public class Word {
      * @return string array for each character from the right (reverse ordered)
      */
     public String[] getRightChars(){
+        if (rightChars!=null){
+            return rightChars;
+        }
         rightChars = new String[numChars];
 
         for (int i = 0; i < numChars; i++){
@@ -39,7 +42,7 @@ public class Word {
     }
 
 
-    //main class for testing
+    //main class for testing (temp)
     public static void main(String[] args) {
         Word w = new Word("vqqhahaha");
         System.out.println(Arrays.toString(w.getLeftChars()));
