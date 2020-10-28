@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Word {
@@ -44,4 +45,6 @@ public class Word {
         System.out.println(w.getLeftChars()[0]);
         System.out.println(w.getRightChars()[0]);
     }
+
+    
 }
