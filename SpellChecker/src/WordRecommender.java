@@ -1,7 +1,5 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -124,16 +122,23 @@ public class WordRecommender {
         
     }***/
 
-    public static void main(String[] args) {
-        Path path = FileSystems.getDefault().getPath("").toAbsolutePath();
-        WordRecommender wr = new WordRecommender(path + "/" + "engDictionary.txt");
-        String[] wr_DicW = wr.getDicWords();
-        System.out.println(wr_DicW.length);
-        System.out.println(new File("").getAbsolutePath());
-        System.out.println(wr.getSimilarity("haha","haha"));
-        System.out.println(wr.getSimilarity("hahe","haha"));
-        System.out.println(wr.getSimilarity("oblige","oblivion"));
-        System.out.println(wr.getSimilarity("aghast","gross"));
+    
+    public String prettyPrint(ArrayList<String> list){
+        StringBuilder forPrint = new StringBuilder();
 
+        for (int i = 0; i < list.size(); i++){
+            forPrint.append(i+1).append(". ").append(list.get(i)).append("\n");
+        }
+
+        return forPrint.toString();
     }
+
+//    public static void main(String[] args) {
+//        Path path = FileSystems.getDefault().getPath("").toAbsolutePath();
+//        WordRecommender wr = new WordRecommender(path + "/" + "engDictionary.txt");
+//        String[] wr_DicW = wr.getDicWords();
+//        System.out.println(wr_DicW.length);
+//
+//    }
+
 }

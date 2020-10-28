@@ -1,6 +1,7 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -80,6 +81,15 @@ class WordRecommenderTest {
 
         assertEquals(4, wr.getSimilarity(word1,word2));
     }
-    
 
+    @Test
+    void testPrettyPrint(){
+        ArrayList<String> stringToPrint = new ArrayList<>();
+        stringToPrint.add("biker");
+        stringToPrint.add("tiger");
+        stringToPrint.add("bigger");
+
+        assertEquals("1. biker\n2. tiger\n3. bigger\n", wr.prettyPrint(stringToPrint));
+        System.out.println(wr.prettyPrint(stringToPrint));
+    }
 }
