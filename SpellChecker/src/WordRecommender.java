@@ -122,6 +122,9 @@ public class WordRecommender {
     }
 
 
+    /**
+     * scan user inputs for tolerance, commonPercent and topN
+     */
     public void scanWordSuggestionInputs(){
         Scanner scan = new Scanner(System.in);
 
