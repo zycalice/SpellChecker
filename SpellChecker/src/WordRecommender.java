@@ -1,7 +1,5 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
@@ -10,6 +8,10 @@ public class WordRecommender {
 
     private String dictionary ;
     private String[] dictionaryWords;
+    public int toleranceInput;
+    public double commonPercentInput;
+    public int topNInput;
+
 
     public WordRecommender(String fileName){
         dictionary = fileName;
@@ -119,7 +121,29 @@ public class WordRecommender {
         double rightSimilarity = getNumSameChars(getWordRightChars(word1), getWordRightChars(word2));
         return  (leftSimilarity + rightSimilarity)/2;
     }
+
+
+    /**
+     * scan user inputs for tolerance, commonPercent and topN
+     */
+    public void scanWordSuggestionInputs(){
+        Scanner scan = new Scanner(System.in);
+
+        //tolerance
+        System.out.println("Please specify tolerance level (0 or positive integer)");
+        toleranceInput = scan.nextInt();
+
+        //commonPercent
+        System.out.println("Please specify common percentage of characters (a double between 0-1)");
+        commonPercentInput = scan.nextDouble();
+
+        //topN
+        System.out.println("Please specify number of word suggestions (positive integer)");
+        topNInput = scan.nextInt();
+
+    }
     
+
     /**
      * return the %same character in two words
      * @param a one word
@@ -179,6 +203,53 @@ public class WordRecommender {
         return top;
     }
 
+    /**
+     *
+     * @param list input a list of strings
+     * @return a string that can be printed pretty
+     */
+    public String prettyPrint(ArrayList<String> list){
+        StringBuilder forPrint = new StringBuilder();
+
+        for (int i = 0; i < list.size(); i++){
+            forPrint.append(i+1).append(". ").append(list.get(i)).append("\n");
+        }
+
+        return forPrint.toString();
+    }
+
+    /**
+     * ask user what to do if this word is not in the dictionary list
+     * @param word from a input with misspells
+     * @return a string that need to replace word with
+     */
+    public String userInteraction(String word){
+        Scanner scan = new Scanner(System.in);
+        ArrayList<String> wordSuggestions = getWordSuggestions(word, toleranceInput, commonPercentInput, topNInput);
+
+        //print instructions for the user
+        System.out.println("The word '" + word + "' is misspelled");
+        System.out.println("The following suggestions are available");
+        System.out.println(prettyPrint(wordSuggestions)); //to edit
+        System.out.println("Press ‘r’ for replace, ‘a’ for accept as is, ‘t’ for type in manually.");
+
+        //intake values conditionally
+        String instruction = scan.next();
+        switch (instruction){
+            case "r":
+                System.out.println("Your word will now be replaced with one of the suggestions\n" +
+                                    "Enter the number corresponding to the word that you want to use for replacement.");
+                int replaceIndex = scan.nextInt();
+                return wordSuggestions.get(replaceIndex);
+            case "a":
+                return word;
+            case "t":
+                System.out.println("Please type the word that will be used as the replacement in the output file.");
+                String manualReplace = scan.nextLine();
+                return manualReplace;
+        }
+        return word;
+    }
 
     public static void main(String[] args) {
         Path path = FileSystems.getDefault().getPath("").toAbsolutePath();
@@ -193,4 +264,5 @@ public class WordRecommender {
         System.out.println(wr.getSimilarity("aghast","gross"));*/
         System.out.println(wr.getWordSuggestions("haha", 2, 0.5, 3));
     }
+
 }
