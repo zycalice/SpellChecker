@@ -92,4 +92,10 @@ class WordRecommenderTest {
         assertEquals("1. biker\n2. tiger\n3. bigger\n", wr.prettyPrint(stringToPrint));
         System.out.println(wr.prettyPrint(stringToPrint));
     }
+
+    @Test
+    void testUserInteraction(){
+        wr.toleranceInput = 1;
+
+    }
 }
