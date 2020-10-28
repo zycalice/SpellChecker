@@ -4,22 +4,19 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.nio.file.*;
 
-public class worldClassRunner {
+public class WorldClassRunner {
 
     
     /**
      * default constructor
      */
-    public worldClassRunner(){
+    public WorldClassRunner(){
     }
 
 
     //main class for testing (temp)
     public static void main(String[] args) {
-        Path path = FileSystems.getDefault().getPath("").toAbsolutePath();
-        WordRecommender wr = new WordRecommender("engDictionary.txt");
-        String[] wr_DicW = wr.getDicWords();
-        //System.out.println(wr_DicW.length);
+
 
     }
 }

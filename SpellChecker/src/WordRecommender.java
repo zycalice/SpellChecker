@@ -20,8 +20,8 @@ public class WordRecommender {
      * @return string array of all the words in the dictionary
      */    
     public String[] readDictionary(String dictionaryFileName){
-        Path path = FileSystems.getDefault().getPath("").toAbsolutePath();
-        File f = new File(path + "/" + dictionaryFileName);
+
+        File f = new File (dictionaryFileName);
         Scanner fileScanner;
         ArrayList<String> dictList = new ArrayList<>();
 
@@ -39,15 +39,34 @@ public class WordRecommender {
         return dictList.toArray(String[]::new);
     }
 
+    /**
+     * get name of the dictionary file
+     * @return the name of the dictionary file
+     */
     public String getDictionary(){
         return dictionary;
     }
 
+    /**
+     * get all words in the dictionary file
+     * @return dictionary in String array form
+     */
     public String[] getDicWords(){
         return dictionaryWords;
     }
+    
     /*** 
     public ArrayList<String> getWordSuggestions (String word, int tolerance, double commonPercent, int topN){
         
     }***/
+
+    public static void main(String[] args) {
+        Path path = FileSystems.getDefault().getPath("").toAbsolutePath();
+        WordRecommender wr = new WordRecommender(path + "/" + "engDictionary.txt");
+        String[] wr_DicW = wr.getDicWords();
+        System.out.println(wr_DicW.length);
+
+        System.out.println(new File("").getAbsolutePath());
+
+    }
 }
