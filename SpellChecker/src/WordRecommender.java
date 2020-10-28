@@ -130,7 +130,7 @@ public class WordRecommender {
         ArrayList<Character> sa = new ArrayList<>();
         ArrayList<Character> sb = new ArrayList<>();
         double same=0.0;
-        double diff = 0.0;
+        double union = 0.0;
         for (int i=0;i<a.length();i++){
             if (!sa.contains(a.charAt(i))){
                 sa.add(a.charAt(i));
@@ -141,15 +141,15 @@ public class WordRecommender {
                 sb.add(b.charAt(i));
             }
         }
-        diff=sa.size();
-        for (int i=0; i<sb.size();i++){
-            if (sa.contains(sb.get(i))){
+        union = sa.size();
+        for (int i = 0; i < sb.size(); i++) {
+            if (sa.contains(sb.get(i))) {
                 same++;
             } else {
-                diff ++;
+                union++;
             }
         }
-        return same/diff;
+        return same / union;
     }
     
     public ArrayList<String> getWordSuggestions (String word, int tolerance, double commonPercent, int topN){
