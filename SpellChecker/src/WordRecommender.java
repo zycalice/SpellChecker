@@ -119,10 +119,36 @@ public class WordRecommender {
         return  (leftSimilarity + rightSimilarity)/2;
     }
     
-    /*** 
+    
     public ArrayList<String> getWordSuggestions (String word, int tolerance, double commonPercent, int topN){
         
-    }***/
+    }
+
+    public double common(String a, String b){
+        ArrayList<Character> sa = new ArrayList<>();
+        ArrayList<Character> sb = new ArrayList<>();
+        double same=0.0;
+        double diff = 0.0;
+        for (int i=0;i<a.length();i++){
+            if (!sa.contains(a.charAt(i))){
+                sa.add(a.charAt(i));
+            }
+        }
+        for (int i=0;i<b.length();i++){
+            if (!sb.contains(b.charAt(i))){
+                sb.add(b.charAt(i));
+            }
+        }
+        diff=sa.size();
+        for (int i=0; i<sb.size();i++){
+            if (sa.contains(sb.get(i))){
+                same++;
+            } else {
+                diff ++;
+            }
+        }
+        return same/diff;
+    }
 
     public static void main(String[] args) {
         Path path = FileSystems.getDefault().getPath("").toAbsolutePath();
