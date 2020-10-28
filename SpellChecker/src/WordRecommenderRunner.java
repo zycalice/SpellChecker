@@ -1,20 +1,16 @@
 
 
-public class WorldClassRunner {
+public class WordRecommenderRunner {
 
     
     /**
      * default constructor
      */
-    public WorldClassRunner(){
+    public WordRecommenderRunner(){
     }
-
-
-
 
     //main class for testing (temp)
     public static void main(String[] args) {
-
 
     }
 }

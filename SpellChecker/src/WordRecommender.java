@@ -1,7 +1,5 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
@@ -262,18 +260,18 @@ public class WordRecommender {
         return word;
     }
 
-    public static void main(String[] args) {
-        Path path = FileSystems.getDefault().getPath("").toAbsolutePath();
-        WordRecommender wr = new WordRecommender(path + "/" + "engDictionary.txt");
-        String[] wr_DicW = wr.getDicWords();
-        /*
-        System.out.println(wr_DicW.length);
-        System.out.println(new File("").getAbsolutePath());
-        System.out.println(wr.getSimilarity("haha","haha"));
-        System.out.println(wr.getSimilarity("hahe","haha"));
-        System.out.println(wr.getSimilarity("oblige","oblivion"));
-        System.out.println(wr.getSimilarity("aghast","gross"));*/
-        System.out.println(wr.getWordSuggestions("haha", 2, 0.5, 3));
-    }
+//    public static void main(String[] args) {
+//        Path path = FileSystems.getDefault().getPath("").toAbsolutePath();
+//        WordRecommender wr = new WordRecommender(path + "/" + "engDictionary.txt");
+//        String[] wr_DicW = wr.getDicWords();
+//        /*
+//        System.out.println(wr_DicW.length);
+//        System.out.println(new File("").getAbsolutePath());
+//        System.out.println(wr.getSimilarity("haha","haha"));
+//        System.out.println(wr.getSimilarity("hahe","haha"));
+//        System.out.println(wr.getSimilarity("oblige","oblivion"));
+//        System.out.println(wr.getSimilarity("aghast","gross"));*/
+//        System.out.println(wr.getWordSuggestions("haha", 2, 0.5, 3));
+//    }
 
 }
