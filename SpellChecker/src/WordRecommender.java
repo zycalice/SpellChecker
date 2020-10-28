@@ -144,7 +144,6 @@ public class WordRecommender {
         topNInput = scan.nextInt();
 
     }
-    
 
     /**
      * return the %same character in two words
@@ -155,8 +154,9 @@ public class WordRecommender {
     public double getCommon(String a, String b){
         ArrayList<Character> sa = new ArrayList<>();
         ArrayList<Character> sb = new ArrayList<>();
-        double same=0.0;
+        double same = 0.0;
         double union = 0.0;
+
         for (int i=0;i<a.length();i++){
             if (!sa.contains(a.charAt(i))){
                 sa.add(a.charAt(i));
@@ -177,13 +177,22 @@ public class WordRecommender {
         }
         return same / union;
     }
-    
+
+    /**
+     * get word suggestions for a single word
+     * @param word the word that need to be compared
+     * @param tolerance get from user input
+     * @param commonPercent get from user input
+     * @param topN get from user input
+     * @return return an arraylist of word suggestions
+     */
     public ArrayList<String> getWordSuggestions (String word, int tolerance, double commonPercent, int topN){
         ArrayList<String> sug = new ArrayList<>();
         ArrayList<Double> sugScore = new ArrayList<>();
         ArrayList<String> top = new ArrayList<>();
         int upper = word.length()+tolerance;
         int lower = Math.max(0,word.length()-tolerance);
+
         for (int i = 0; i<dictionaryWords.length; i++){
             double com = getCommon(word,dictionaryWords[i]);
             int leng = dictionaryWords[i].length();
