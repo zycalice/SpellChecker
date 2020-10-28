@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class WordRecommender {
@@ -143,10 +144,63 @@ public class WordRecommender {
     }
     
 
+    /**
+     * return the %same character in two words
+     * @param a one word
+     * @param b the second word
+     * @return a double - %same character in two words
+     */
+    public double getCommon(String a, String b){
+        ArrayList<Character> sa = new ArrayList<>();
+        ArrayList<Character> sb = new ArrayList<>();
+        double same=0.0;
+        double union = 0.0;
+        for (int i=0;i<a.length();i++){
+            if (!sa.contains(a.charAt(i))){
+                sa.add(a.charAt(i));
+            }
+        }
+        for (int i=0;i<b.length();i++){
+            if (!sb.contains(b.charAt(i))){
+                sb.add(b.charAt(i));
+            }
+        }
+        union = sa.size();
+        for (int i = 0; i < sb.size(); i++) {
+            if (sa.contains(sb.get(i))) {
+                same++;
+            } else {
+                union++;
+            }
+        }
+        return same / union;
+    }
+    
     public ArrayList<String> getWordSuggestions (String word, int tolerance, double commonPercent, int topN){
-        //TO DO:
-        ArrayList<String> wordSuggestion = new ArrayList<>();
-        return wordSuggestion;
+        ArrayList<String> sug = new ArrayList<>();
+        ArrayList<Double> sugScore = new ArrayList<>();
+        ArrayList<String> top = new ArrayList<>();
+        int upper = word.length()+tolerance;
+        int lower = Math.max(0,word.length()-tolerance);
+        for (int i = 0; i<dictionaryWords.length; i++){
+            double com = getCommon(word,dictionaryWords[i]);
+            int leng = dictionaryWords[i].length();
+            if (leng<=upper && leng>=lower && com>=commonPercent){
+                sug.add(dictionaryWords[i]);
+            }
+        }
+        for (int i = 0; i<sug.size(); i++){
+            sugScore.add(getSimilarity(sug.get(i), word));
+        }    
+        while (topN>0){
+            double maxi = Collections.max(sugScore);
+            int index = sugScore.indexOf(maxi);
+            top.add(sug.get(index));
+            sug.remove(index);
+            sugScore.remove(index);
+            topN--;
+        }
+        return top;
     }
 
     /**
@@ -197,12 +251,18 @@ public class WordRecommender {
         return word;
     }
 
-//    public static void main(String[] args) {
-//        Path path = FileSystems.getDefault().getPath("").toAbsolutePath();
-//        WordRecommender wr = new WordRecommender(path + "/" + "engDictionary.txt");
-//        String[] wr_DicW = wr.getDicWords();
-//        System.out.println(wr_DicW.length);
-//
-//    }
+    public static void main(String[] args) {
+        Path path = FileSystems.getDefault().getPath("").toAbsolutePath();
+        WordRecommender wr = new WordRecommender(path + "/" + "engDictionary.txt");
+        String[] wr_DicW = wr.getDicWords();
+        /*
+        System.out.println(wr_DicW.length);
+        System.out.println(new File("").getAbsolutePath());
+        System.out.println(wr.getSimilarity("haha","haha"));
+        System.out.println(wr.getSimilarity("hahe","haha"));
+        System.out.println(wr.getSimilarity("oblige","oblivion"));
+        System.out.println(wr.getSimilarity("aghast","gross"));*/
+        System.out.println(wr.getWordSuggestions("haha", 2, 0.5, 3));
+    }
 
 }
