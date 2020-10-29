@@ -62,14 +62,6 @@ public class WordRecommender {
         return dictionaryWords;
     }
 
-    public int getWordLength(String word){
-        //empty word should have zero length
-        if (word.trim().equals("")){
-            return 0;
-        }
-        //otherwise, normal length
-        return word.split("").length;
-    }
     /**
      * get an string array for each character from the left
      * @return string array for each character from the left
@@ -83,11 +75,11 @@ public class WordRecommender {
      * @return string array of each character starting from the right
      */
     public String[] getWordRightChars(String word){
-        String [] rightChars = new String[getWordLength(word)];
+        String [] rightChars = new String[word.length()];
 
         //loop to get the reverse ordered characters
-        for (int i = 0; i < getWordLength(word); i++){
-            rightChars[i] = getWordLeftChars(word)[getWordLength(word)-i-1];
+        for (int i = 0; i < word.length(); i++){
+            rightChars[i] = getWordLeftChars(word)[word.length()-i-1];
         }
         return rightChars;
     }

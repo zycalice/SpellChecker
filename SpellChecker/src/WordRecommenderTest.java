@@ -16,21 +16,6 @@ class WordRecommenderTest {
     }
 
     @Test
-    void testGetWordLength0(){
-        assertEquals(0, wr.getWordLength(" "));
-    }
-
-    @Test
-    void testGetWordLength1(){
-        assertEquals(1, wr.getWordLength("h"));
-    }
-
-    @Test
-    void testGetWordLength4(){
-        assertEquals(4, wr.getWordLength("haha"));
-    }
-
-    @Test
     void testGetWordLeftChars(){
         String [] expectation = {"h", "a", "h" ,"a"};
         assertEquals(Arrays.toString(expectation), Arrays.toString(wr.getWordLeftChars("haha")));
