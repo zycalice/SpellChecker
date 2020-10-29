@@ -93,9 +93,4 @@ class WordRecommenderTest {
         System.out.println(wr.prettyPrint(stringToPrint));
     }
 
-    @Test
-    void testUserInteraction(){
-        wr.toleranceInput = 1;
-
-    }
 }

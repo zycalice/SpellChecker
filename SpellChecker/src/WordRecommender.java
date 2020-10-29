@@ -1,13 +1,13 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Scanner;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.*;
 
 public class WordRecommender {
 
     private String dictionary ;
-    private String[] dictionaryWords;
+    private ArrayList<String> dictionaryWords;
     public int toleranceInput;
     public double commonPercentInput;
     public int topNInput;
@@ -23,7 +23,7 @@ public class WordRecommender {
      * make sure the dictionaryFileName input is in the right path; if error, check the current path
      * @return string array of all the words in the dictionary
      */    
-    public String[] readDictionary(String dictionaryFileName){
+    public ArrayList<String> readDictionary(String dictionaryFileName){
         //read dictionary as ArrayList first
         File f = new File (dictionaryFileName);
         Scanner fileScanner;
@@ -43,7 +43,7 @@ public class WordRecommender {
         }
 
         //convert to string array
-        return dictList.toArray(String[]::new);
+        return dictList;
     }
 
     /**
@@ -58,7 +58,7 @@ public class WordRecommender {
      * get all words in the dictionary file
      * @return dictionary in String array form
      */
-    public String[] getDicWords(){
+    public ArrayList<String> getDicWords(){
         return dictionaryWords;
     }
 
@@ -131,15 +131,15 @@ public class WordRecommender {
 
         //tolerance
         System.out.println("Please specify tolerance level (0 or positive integer)");
-        toleranceInput = scan.nextInt();
+        toleranceInput = nonNegativeIntegerEnforceInput();
 
         //commonPercent
         System.out.println("Please specify common percentage of characters (a double between 0-1)");
-        commonPercentInput = scan.nextDouble();
+        commonPercentInput = percentEnforceInput();
 
         //topN
         System.out.println("Please specify number of word suggestions (positive integer)");
-        topNInput = scan.nextInt();
+        topNInput = positiveIntegerEnforceInput();
 
     }
 
@@ -166,8 +166,8 @@ public class WordRecommender {
             }
         }
         union = sa.size();
-        for (int i = 0; i < sb.size(); i++) {
-            if (sa.contains(sb.get(i))) {
+        for (Character character : sb) {
+            if (sa.contains(character)) {
                 same++;
             } else {
                 union++;
@@ -184,6 +184,7 @@ public class WordRecommender {
      * @param topN get from user input
      * @return return an arraylist of word suggestions
      */
+    //TO DO: need to have a error exception if commonPercent is not possible, or topN is not possible
     public ArrayList<String> getWordSuggestions (String word, int tolerance, double commonPercent, int topN){
         ArrayList<String> sug = new ArrayList<>();
         ArrayList<Double> sugScore = new ArrayList<>();
@@ -191,15 +192,15 @@ public class WordRecommender {
         int upper = word.length()+tolerance;
         int lower = Math.max(0,word.length()-tolerance);
 
-        for (int i = 0; i<dictionaryWords.length; i++){
-            double com = getCommon(word,dictionaryWords[i]);
-            int leng = dictionaryWords[i].length();
-            if (leng<=upper && leng>=lower && com>=commonPercent){
-                sug.add(dictionaryWords[i]);
+        for (String dictionaryWord : dictionaryWords) {
+            double com = getCommon(word, dictionaryWord);
+            int leng = dictionaryWord.length();
+            if (leng <= upper && leng >= lower && com >= commonPercent) {
+                sug.add(dictionaryWord);
             }
         }
-        for (int i = 0; i<sug.size(); i++){
-            sugScore.add(getSimilarity(sug.get(i), word));
+        for (String s : sug) {
+            sugScore.add(getSimilarity(s, word));
         }    
         while (topN>0){
             double maxi = Collections.max(sugScore);
@@ -213,7 +214,7 @@ public class WordRecommender {
     }
 
     /**
-     *
+     * pretty print an array list
      * @param list input a list of strings
      * @return a string that can be printed pretty
      */
@@ -232,7 +233,7 @@ public class WordRecommender {
      * @param word from a input with misspells
      * @return a string that need to replace word with
      */
-    public String userInteraction(String word){
+    public String userDecision(String word){
         Scanner scan = new Scanner(System.in);
         ArrayList<String> wordSuggestions = getWordSuggestions(word, toleranceInput, commonPercentInput, topNInput);
 
@@ -242,22 +243,175 @@ public class WordRecommender {
         System.out.println(prettyPrint(wordSuggestions)); //to edit
         System.out.println("Press ‘r’ for replace, ‘a’ for accept as is, ‘t’ for type in manually.");
 
-        //intake values conditionally
-        String instruction = scan.next();
+        //intake values conditionally and error checking
+        String instruction = choiceEnforceInput();
         switch (instruction){
             case "r":
                 System.out.println("Your word will now be replaced with one of the suggestions\n" +
-                                    "Enter the number corresponding to the word that you want to use for replacement.");
-                int replaceIndex = scan.nextInt();
-                return wordSuggestions.get(replaceIndex);
+                        "Enter the number corresponding to the word that you want to use for replacement.");
+                int replaceIndex = replaceEnforceInput();
+                return wordSuggestions.get(replaceIndex-1);
             case "a":
                 return word;
             case "t":
                 System.out.println("Please type the word that will be used as the replacement in the output file.");
-                String manualReplace = scan.nextLine();
-                return manualReplace;
+                return scan.nextLine();
         }
         return word;
+    }
+
+    /**
+     * check if an input is an integer
+     * @param input a string
+     * @return true if it is an integer
+     */
+    private boolean nonNegativeIntegerCheck(String input){
+        try {
+                int i = Integer.parseInt(input);
+                if (i<0){
+                    return false;
+                }
+            } catch(NumberFormatException e) {
+                return false;
+            }
+        return true;
+    }
+
+    /**
+     * guarantees a non-negative integer input
+     * @return a non-negative integer
+     */
+    private int nonNegativeIntegerEnforceInput(){
+        Scanner scan = new Scanner(System.in);
+        String inputString = scan.nextLine();
+        while (!nonNegativeIntegerCheck(inputString)){
+            System.out.println("Not a non-negative. Enter a non-negative integer.");
+            inputString = scan.nextLine();
+        }
+        return Integer.parseInt(inputString);
+    }
+
+    /**
+     * guarantees a positive integer input
+     * @return a positive integer
+     */
+    private int positiveIntegerEnforceInput(){
+        int inputNonNeg = nonNegativeIntegerEnforceInput();
+        while (inputNonNeg == 0){
+            System.out.println("Not a positive integer. Enter a positive integer.");
+            inputNonNeg = nonNegativeIntegerEnforceInput();
+        }
+        return inputNonNeg;
+    }
+
+    /**
+     * check if an input is a double
+     * @param input a string
+     * @return a double
+     */
+    private boolean percentCheck(String input){
+        try{
+            double percent = Double.parseDouble(input);
+            if (percent <0 || percent >1){
+                return false;
+            }
+        } catch(NumberFormatException e) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * guarantees a percentage input
+     * @return a double
+     */
+    private double percentEnforceInput(){
+        Scanner scan = new Scanner(System.in);
+        String inputString = scan.nextLine();
+        while (!percentCheck(inputString)){
+            System.out.println("Not a percentage. Enter a double between 0 and 1.");
+            inputString = scan.nextLine();
+        }
+        return Double.parseDouble(inputString);
+    }
+
+    /**
+     * a function that will continue until the input is "r","a" or "t"
+     * @return r, a, or t
+     */
+    private String choiceEnforceInput(){
+        Scanner scan = new Scanner(System.in);
+        String [] possibleChoices = {"r","a","t"};
+        String input = "";
+        //while loop to take input until a string is "r", "a" or "t"
+        while (!Arrays.asList(possibleChoices).contains(input)){
+            System.out.println("Invalid input; enter 'r','a', or 't'");
+            input = scan.nextLine();
+        }
+        return input;
+    }
+
+
+    /**
+     * a function that will continue until the input is from top N
+     * @return an integer in top N
+     */
+    private int replaceEnforceInput(){
+        int input = nonNegativeIntegerEnforceInput();
+        //while loop until this number is in topN
+        while((input <= 0) || (input > topNInput)){
+            System.out.println("Please enter an integer within the range (top N).");
+            input = nonNegativeIntegerEnforceInput();
+        }
+        return input;
+    }
+
+    /**
+     * run the recommender
+     * @param spellCheckFileName a file that needs to be checked for spelling, no punctuations
+     */
+    public void runRecommender(String spellCheckFileName, String outputFileName){
+        //read dictionary as ArrayList first
+        File f = new File (spellCheckFileName);
+        Scanner fileScanner;
+
+        //prepare new file for output
+        File myObj = new File(outputFileName);
+
+        //read, update, and write each word
+        try {
+            //create a new file
+            if (myObj.createNewFile()) {
+                System.out.println("File created: " + myObj.getName());
+            } else {
+                System.out.println("File already exists.");
+                PrintWriter clear = new PrintWriter(outputFileName);
+                clear.print("");
+                clear.close();
+            }
+
+            //read, update and write the word to the new file
+            PrintWriter pw = new PrintWriter(outputFileName);
+            try {
+                fileScanner = new Scanner(f);
+                while (fileScanner.hasNext()) {
+                    String word = fileScanner.next();
+                    String newWord = word;
+                    if (!dictionaryWords.contains(word)){
+                        newWord = userDecision(word);
+                    }
+                    pw.write(newWord + " ");
+                }
+                pw.close();
+            } catch (FileNotFoundException e) {
+                System.out.println("bad file name; current path is" + f.getAbsolutePath());
+                e.printStackTrace();
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
 //    public static void main(String[] args) {
