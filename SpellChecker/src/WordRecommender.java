@@ -8,9 +8,9 @@ public class WordRecommender {
 
     private String dictionary ;
     private ArrayList<String> dictionaryWords;
-    public int toleranceInput;
-    public double commonPercentInput;
-    public int topNInput;
+    private int toleranceInput;
+    private double commonPercentInput;
+    private int topNInput;
 
 
     public WordRecommender(String fileName){
