@@ -194,9 +194,7 @@ public class WordRecommender {
         for (String s : sug) {
             sugScore.add(getSimilarity(s, word));
         }   
-        if(sug.size()<=topN){
-            return sug;
-        } 
+        topN=Math.min(topN,sug.size());
         while (topN>0){
             double maxi = 0;
             int index = 0;
@@ -419,18 +417,17 @@ public class WordRecommender {
 
     }
 
-//    public static void main(String[] args) {
-//        Path path = FileSystems.getDefault().getPath("").toAbsolutePath();
-//        WordRecommender wr = new WordRecommender(path + "/" + "engDictionary.txt");
-//        String[] wr_DicW = wr.getDicWords();
-//        /*
-//        System.out.println(wr_DicW.length);
-//        System.out.println(new File("").getAbsolutePath());
-//        System.out.println(wr.getSimilarity("haha","haha"));
-//        System.out.println(wr.getSimilarity("hahe","haha"));
-//        System.out.println(wr.getSimilarity("oblige","oblivion"));
-//        System.out.println(wr.getSimilarity("aghast","gross"));*/
-//        System.out.println(wr.getWordSuggestions("haha", 2, 0.5, 3));
-//    }
+    public static void main(String[] args) {
+        //Path path = FileSystems.getDefault().getPath("").toAbsolutePath();
+        // WordRecommender wr = new WordRecommender("engDictionary.txt");
+        
+        
+        // //System.out.println(wr_DicW.length);
+        // //System.out.println(new File("").getAbsolutePath());
+        // System.out.println(wr.getSimilarity("hahhh","haha"));
+        // System.out.println(wr.getSimilarity("hahhh","ha"));
+        // System.out.println(wr.getSimilarity("hahhh","ah"));
+        // System.out.println(wr.getSimilarity("hahhh","aha"));
+   }
 
 }
