@@ -191,12 +191,24 @@ public class WordRecommender {
                 sug.add(dictionaryWord);
             }
         }
+        /*
+        try{
+            String testSug = sug.get(0);
+        } catch(IndexOutOfBoundsException e){
+            System.out.println("No suggestion available, common percentage too strict, please lower your constraint")
+        } */
         for (String s : sug) {
             sugScore.add(getSimilarity(s, word));
         }    
         while (topN>0){
-            double maxi = Collections.max(sugScore);
-            int index = sugScore.indexOf(maxi);
+            double maxi = 0;
+            int index = 0;
+            for (int i = 0; i<sugScore.size();i++){
+                if (sugScore.get(i)>maxi){
+                    maxi = sugScore.get(i);
+                    index = i;
+                }
+            }
             top.add(sug.get(index));
             sug.remove(index);
             sugScore.remove(index);
@@ -231,8 +243,12 @@ public class WordRecommender {
 
         //print instructions for the user
         System.out.println("The word '" + word + "' is misspelled");
-        System.out.println("The following suggestions are available");
-        System.out.println(prettyPrint(wordSuggestions)); //to edit
+        if (wordSuggestions.size()==0){
+            System.out.println("Sorry there are no suggestions available");
+        } else{
+            System.out.println("The following suggestions are available");
+            System.out.println(prettyPrint(wordSuggestions)); //to edit
+        }   
         System.out.println("Press ‘r’ for replace, ‘a’ for accept as is, ‘t’ for type in manually.");
 
         //intake values conditionally and error checking
