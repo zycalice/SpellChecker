@@ -429,7 +429,7 @@ public class WordRecommender {
 
     }
 
-    public static void main(String[] args) {
+    //public static void main(String[] args) {
         //Path path = FileSystems.getDefault().getPath("").toAbsolutePath();
         // WordRecommender wr = new WordRecommender("engDictionary.txt");
         
@@ -440,6 +440,6 @@ public class WordRecommender {
         // System.out.println(wr.getSimilarity("hahhh","ha"));
         // System.out.println(wr.getSimilarity("hahhh","ah"));
         // System.out.println(wr.getSimilarity("hahhh","aha"));
-   }
+   //}
 
 }
