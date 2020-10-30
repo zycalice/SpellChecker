@@ -10,4 +10,4 @@ public class WordRecommenderRunner {
         wr.runRecommender(fileToCheck,fileToCheck.substring(0, dot)+"_chk.txt");
 
     }
-}f
+}
