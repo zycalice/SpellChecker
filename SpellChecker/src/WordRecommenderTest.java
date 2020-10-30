@@ -66,7 +66,23 @@ class WordRecommenderTest {
 
         assertEquals(4, wr.getSimilarity(word1,word2));
     }
+    
+    @Test
+    void testGetCommon1(){
+        String word1 = "committee";
+        String word2 = "comet";
 
+        assertEquals(5.0/6, wr.getCommon(word1,word2));
+    }
+
+    @Test
+    void testGetCommon2(){
+        String word1 = "garden";
+        String word2 = "nerdi";
+
+        assertEquals(4.0/7, wr.getCommon(word1,word2));
+    }
+    
     @Test
     void testPrettyPrint(){
         ArrayList<String> stringToPrint = new ArrayList<>();
