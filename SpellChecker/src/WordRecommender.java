@@ -119,7 +119,6 @@ public class WordRecommender {
      * scan user inputs for tolerance, commonPercent and topN
      */
     public void scanWordSuggestionInputs(){
-        Scanner scan = new Scanner(System.in);
 
         //tolerance
         System.out.println("Please specify tolerance level (0 or positive integer)");
@@ -346,25 +345,24 @@ public class WordRecommender {
      */
     private String choiceEnforceInput(int outputLen){
         Scanner scan = new Scanner(System.in);
+        String[] possibleChoices;
+        String input = scan.nextLine();
         if (outputLen>0){
-            String [] possibleChoices = {"r","a","t"};
-            String input = scan.nextLine();
+            possibleChoices = new String[]{"r", "a", "t"};
             //while loop to take input until a string is "r", "a" or "t"
             while (!Arrays.asList(possibleChoices).contains(input)){
                 System.out.println("Invalid input; enter 'r','a', or 't'");
                 input = scan.nextLine();
             }
-            return input;
         } else {
-            String [] possibleChoices = {"a","t"};
-            String input = scan.nextLine();
+            possibleChoices = new String[]{"a", "t"};
             //while loop to take input until a string is "a" or "t"
             while (!Arrays.asList(possibleChoices).contains(input)){
                 System.out.println("Invalid input; enter 'a' or 't'");
                 input = scan.nextLine();
             }
-            return input;
         }
+        return input;
     }
 
     /**
@@ -426,20 +424,6 @@ public class WordRecommender {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
-
-    public static void main(String[] args) {
-        //Path path = FileSystems.getDefault().getPath("").toAbsolutePath();
-        // WordRecommender wr = new WordRecommender("engDictionary.txt");
-        
-        
-        // //System.out.println(wr_DicW.length);
-        // //System.out.println(new File("").getAbsolutePath());
-        // System.out.println(wr.getSimilarity("hahhh","haha"));
-        // System.out.println(wr.getSimilarity("hahhh","ha"));
-        // System.out.println(wr.getSimilarity("hahhh","ah"));
-        // System.out.println(wr.getSimilarity("hahhh","aha"));
-   }
 
 }
