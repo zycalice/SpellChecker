@@ -240,14 +240,16 @@ public class WordRecommender {
         System.out.println("The word '" + word + "' is misspelled");
         if (wordSuggestions.size()==0){
             System.out.println("Sorry there are no suggestions available");
+            System.out.println("Press ‘a’ for accept as is or ‘t’ for type in manually.");
         } else{
             System.out.println("The following suggestions are available");
             System.out.println(prettyPrint(wordSuggestions)); //to edit
+            System.out.println("Press ‘r’ for replace, ‘a’ for accept as is, ‘t’ for type in manually.");
         }   
-        System.out.println("Press ‘r’ for replace, ‘a’ for accept as is, ‘t’ for type in manually.");
+        
 
         //intake values conditionally and error checking
-        String instruction = choiceEnforceInput();
+        String instruction = choiceEnforceInput(wordSuggestions.size());
         switch (instruction){
             case "r":
                 System.out.println("Your word will now be replaced with one of the suggestions\n" +
@@ -342,18 +344,28 @@ public class WordRecommender {
      * a function that will continue until the input is "r","a" or "t"
      * @return r, a, or t
      */
-    private String choiceEnforceInput(){
+    private String choiceEnforceInput(int outputLen){
         Scanner scan = new Scanner(System.in);
-        String [] possibleChoices = {"r","a","t"};
-        String input = scan.nextLine();
-        //while loop to take input until a string is "r", "a" or "t"
-        while (!Arrays.asList(possibleChoices).contains(input)){
-            System.out.println("Invalid input; enter 'r','a', or 't'");
-            input = scan.nextLine();
+        if (outputLen>0){
+            String [] possibleChoices = {"r","a","t"};
+            String input = scan.nextLine();
+            //while loop to take input until a string is "r", "a" or "t"
+            while (!Arrays.asList(possibleChoices).contains(input)){
+                System.out.println("Invalid input; enter 'r','a', or 't'");
+                input = scan.nextLine();
+            }
+            return input;
+        } else {
+            String [] possibleChoices = {"a","t"};
+            String input = scan.nextLine();
+            //while loop to take input until a string is "a" or "t"
+            while (!Arrays.asList(possibleChoices).contains(input)){
+                System.out.println("Invalid input; enter 'a' or 't'");
+                input = scan.nextLine();
+            }
+            return input;
         }
-        return input;
     }
-
 
     /**
      * a function that will continue until the input is from top N
