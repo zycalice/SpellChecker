@@ -136,29 +136,34 @@ public class WordRecommender {
 
     /**
      * return the %same character in two words
-     * @param a one word
-     * @param b the second word
+     * @param word1 one word
+     * @param word2 the second word
      * @return a double - %same character in two words
      */
-    public double getCommon(String a, String b){
-        ArrayList<Character> sa = new ArrayList<>();
-        ArrayList<Character> sb = new ArrayList<>();
+    public double getCommon(String word1, String word2){
+        ArrayList<Character> s1 = new ArrayList<>();
+        ArrayList<Character> s2 = new ArrayList<>();
         double same = 0.0;
-        double union = 0.0;
+        double union;
 
-        for (int i=0;i<a.length();i++){
-            if (!sa.contains(a.charAt(i))){
-                sa.add(a.charAt(i));
+        //unique letters for word1
+        for (int i = 0;i < word1.length();i++){
+            if (!s1.contains(word1.charAt(i))){
+                s1.add(word1.charAt(i));
             }
         }
-        for (int i=0;i<b.length();i++){
-            if (!sb.contains(b.charAt(i))){
-                sb.add(b.charAt(i));
+
+        //unique letters for word2
+        for (int i = 0;i < word2.length();i++){
+            if (!s2.contains(word2.charAt(i))){
+                s2.add(word2.charAt(i));
             }
         }
-        union = sa.size();
-        for (Character character : sb) {
-            if (sa.contains(character)) {
+
+        //calculate union
+        union = s1.size();
+        for (Character character : s2) {
+            if (s1.contains(character)) {
                 same++;
             } else {
                 union++;
@@ -175,7 +180,6 @@ public class WordRecommender {
      * @param topN get from user input
      * @return return an arraylist of word suggestions
      */
-    //TO DO: need to have a error exception if commonPercent is not possible, or topN is not possible
     public ArrayList<String> getWordSuggestions (String word, int tolerance, double commonPercent, int topN){
         ArrayList<String> sug = new ArrayList<>();
         ArrayList<Double> sugScore = new ArrayList<>();
@@ -183,6 +187,7 @@ public class WordRecommender {
         int upper = word.length()+tolerance;
         int lower = Math.max(0,word.length()-tolerance);
 
+        //filter for tolerance and commonPercent requirements
         for (String dictionaryWord : dictionaryWords) {
             double com = getCommon(word, dictionaryWord);
             int leng = dictionaryWord.length();
@@ -190,11 +195,17 @@ public class WordRecommender {
                 sug.add(dictionaryWord);
             }
         }
+
+        //for each filtered words, calculate similarity
         for (String s : sug) {
             sugScore.add(getSimilarity(s, word));
-        }   
-        topN=Math.min(topN,sug.size());
-        while (topN>0){
+        }
+
+        //top N is N or max of the suggestion (in this case, dealt with a min function)
+        topN = Math.min(topN,sug.size());
+
+        //while loop to obtain max and add to top until repeated topN times
+        while (topN > 0){
             double maxi = 0;
             int index = 0;
             for (int i = 0; i<sugScore.size();i++){
