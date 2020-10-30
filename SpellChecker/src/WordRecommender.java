@@ -191,15 +191,12 @@ public class WordRecommender {
                 sug.add(dictionaryWord);
             }
         }
-        /*
-        try{
-            String testSug = sug.get(0);
-        } catch(IndexOutOfBoundsException e){
-            System.out.println("No suggestion available, common percentage too strict, please lower your constraint")
-        } */
         for (String s : sug) {
             sugScore.add(getSimilarity(s, word));
-        }    
+        }   
+        if(sug.size()<=topN){
+            return sug;
+        } 
         while (topN>0){
             double maxi = 0;
             int index = 0;
@@ -350,7 +347,7 @@ public class WordRecommender {
     private String choiceEnforceInput(){
         Scanner scan = new Scanner(System.in);
         String [] possibleChoices = {"r","a","t"};
-        String input = "";
+        String input = scan.nextLine();
         //while loop to take input until a string is "r", "a" or "t"
         while (!Arrays.asList(possibleChoices).contains(input)){
             System.out.println("Invalid input; enter 'r','a', or 't'");
