@@ -12,7 +12,10 @@ public class WordRecommender {
     private double commonPercentInput;
     private int topNInput;
 
-
+    /**
+     * constructor with input dictionary
+     * @param fileName, which is a dictionary
+     */
     public WordRecommender(String fileName){
         dictionary = fileName;
         dictionaryWords = readDictionary(fileName);
