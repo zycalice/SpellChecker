@@ -6,8 +6,8 @@ import java.util.*;
 
 public class WordRecommender {
 
-    private String dictionary ;
-    private ArrayList<String> dictionaryWords;
+    final String dictionary ;
+    final ArrayList<String> dictionaryWords;
     private int toleranceInput;
     private double commonPercentInput;
     private int topNInput;
