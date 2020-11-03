@@ -163,7 +163,7 @@ public class WordRecommender {
             }
         }
 
-        //calculate union
+        //calculate same and union
         union = s1.size();
         for (Character character : s2) {
             if (s1.contains(character)) {

@@ -9,10 +9,12 @@ import static org.junit.jupiter.api.Assertions.*;
 class WordRecommenderTest {
 
     WordRecommender wr;
+    WordRecommender wrSimple;
 
     @BeforeEach
     void setUp() throws Exception{
          wr = new WordRecommender("engDictionary.txt");
+         wrSimple = new WordRecommender("sampleDictionary.txt");
     }
 
     @Test
@@ -82,6 +84,32 @@ class WordRecommenderTest {
 
         assertEquals(4.0/7, wr.getCommon(word1,word2));
     }
+
+
+    @Test
+    void testGetCommon3(){
+        String word1 = "built";
+        String word2 = "billing";
+
+        assertEquals(3.0/7, wr.getCommon(word1,word2));
+
+    }
+
+    @Test
+    void testGetCommon4(){
+        String word1 = "fille";
+        String word2 = "filling";
+
+        assertEquals(3.0/6, wr.getCommon(word1,word2));
+    }
+
+    @Test
+    void testGetCommon5(){
+        String word1 = "fille";
+        String word2 = "billing";
+
+        assertEquals(2.0/7, wr.getCommon(word1,word2));
+    }
     
     @Test
     void testPrettyPrint(){
@@ -92,6 +120,60 @@ class WordRecommenderTest {
 
         assertEquals("1. biker\n2. tiger\n3. bigger\n", wr.prettyPrint(stringToPrint));
         System.out.println(wr.prettyPrint(stringToPrint));
+    }
+
+    @Test
+    void testGetWordSuggestionSimple0(){
+        ArrayList<String> resultTest = wrSimple.getWordSuggestions("xixi",3,0.3,3);
+        String[] test = new String[]{""};
+
+        assertEquals("[]", Arrays.toString(resultTest.toArray()));
+    }
+
+    @Test
+    void testGetWordSuggestionSimple1(){
+        ArrayList<String> resultTest = wrSimple.getWordSuggestions("built",1,0.6,3);
+        String[] test = new String[]{"build"};
+
+        assertEquals(Arrays.toString(test), Arrays.toString(resultTest.toArray()));
+    }
+
+
+    @Test
+    void testGetWordSuggestionSimple2(){
+        ArrayList<String> resultTest = wrSimple.getWordSuggestions("built",3,0.4,3);
+        String[] test = new String[]{"build", "building","billing"};
+
+        assertEquals(Arrays.toString(test), Arrays.toString(resultTest.toArray()));
+    }
+
+    @Test
+    void testGetWordSuggestionSimple3(){
+        ArrayList<String> resultTest = wrSimple.getWordSuggestions("fille",3,0.3,10);
+        String[] test = new String[]{"file", "filing"};
+
+        assertEquals(Arrays.toString(test), Arrays.toString(resultTest.toArray()));
+    }
+
+    @Test
+    void testGetWordSuggestionSimple4(){
+        ArrayList<String> resultTest = wrSimple.getWordSuggestions("fille",3,0.5,10);
+        String[] test = new String[]{"file", "filing"};
+
+        assertEquals(Arrays.toString(test), Arrays.toString(resultTest.toArray()));
+    }
+
+    @Test
+    void testGetWordSuggestion0(){
+        ArrayList<String> resultTest = wr.getWordSuggestions("xixi",1,0.9,10);
+        String[] test = new String[]{""};
+
+        assertEquals(Arrays.toString(test), Arrays.toString(resultTest.toArray()));
+    }
+
+    @Test
+    void testReadDictionary(){
+
     }
 
 }
