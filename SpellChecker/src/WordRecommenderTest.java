@@ -1,9 +1,13 @@
+/*
+  CIT 591 HW5, written by
+  Xinyi (Viola) Li
+  Yuchen Zhang
+ */
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
 import java.util.Arrays;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class WordRecommenderTest {
@@ -127,7 +131,7 @@ class WordRecommenderTest {
         ArrayList<String> resultTest = wrSimple.getWordSuggestions("xixi",3,0.3,3);
         String[] test = new String[]{""};
 
-        assertEquals("[]", Arrays.toString(resultTest.toArray()));
+        assertEquals(Arrays.toString(test), Arrays.toString(resultTest.toArray()));
     }
 
     @Test

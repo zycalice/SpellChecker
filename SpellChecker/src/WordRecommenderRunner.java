@@ -1,3 +1,8 @@
+/**
+ * CIT 591 HW5, written by
+ * Xinyi (Viola) Li
+ * Yuchen Zhang
+ */
 
 public class WordRecommenderRunner {
 
@@ -7,7 +12,9 @@ public class WordRecommenderRunner {
         int dot = fileToCheck.indexOf(".");
         String fileToWrite = fileToCheck.substring(0, dot)+"_chk.txt";
         String dictToRead = "engDictionary.txt";
-        UserInteraction ui = new UserInteraction(dictToRead, fileToCheck,fileToWrite);
+
+        //Call user interaction for to run the program
+        UserInteraction ui = new UserInteraction(dictToRead, fileToCheck, fileToWrite);
         ui.scanWordSuggestionInputs();
         ui.runInteraction();
 

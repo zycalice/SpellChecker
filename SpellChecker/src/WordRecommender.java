@@ -1,8 +1,14 @@
+/*
+  CIT 591 HW5, written by
+  Xinyi (Viola) Li
+  Yuchen Zhang
+ */
+
 import java.util.*;
 
 public class WordRecommender {
 
-    private Dictionary dict;
+    private final Dictionary dict;
 
     /**
      * constructor with input dictionary
@@ -127,8 +133,8 @@ public class WordRecommender {
         //filter for tolerance and commonPercent requirements
         for (String dictionaryWord : dict.getDictionaryWords()) {
             double com = getCommon(word, dictionaryWord);
-            int leng = dictionaryWord.length();
-            if (leng <= upper && leng >= lower && com >= commonPercent) {
+            int len = dictionaryWord.length();
+            if (len <= upper && len >= lower && com >= commonPercent) {
                 sug.add(dictionaryWord);
             }
         }

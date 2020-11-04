@@ -1,3 +1,9 @@
+/*
+  CIT 591 HW5, written by
+  Xinyi (Viola) Li
+  Yuchen Zhang
+ */
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -15,7 +21,6 @@ public class Dictionary {
     /**
      * method to read in the dictionary; make sure the file path exist
      * make sure the dictionaryFileName input is in the right path; if error, check the current path
-     * @return string array of all the words in the dictionary
      */
     public void readDict(){
         //read dictionary as ArrayList first
@@ -58,7 +63,7 @@ public class Dictionary {
 
     /**
      * get dictionary size/number of words in the dictionary
-     * @return (interger) number of words in the dictionary
+     * @return (integer) number of words in the dictionary
      */
     public int getDictionaryLen(){
         return getDictionaryWords().size();

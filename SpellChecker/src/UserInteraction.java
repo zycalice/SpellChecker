@@ -1,3 +1,9 @@
+/*
+  CIT 591 HW5, written by
+  Xinyi (Viola) Li
+  Yuchen Zhang
+ */
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -8,18 +14,18 @@ import java.io.PrintWriter;
 
 public class UserInteraction{
 
-    private WordRecommender wr;
+    private final WordRecommender wr;
     private int toleranceInput;
     private double commonPercentInput;
     private int topNInput;
-    private String spellCheckFileName;
-    private String outputFileName;
+    private final String spellCheckFileName;
+    private final String outputFileName;
 
     /**
      * constructor with input dictionary, file to read and file to write
      * @param dictToRead, which is a dictionary txt file 
      * @param spellCheckFileName, which is a txt file to read input
-     * @param fileToWrite, which is a txt file to write output
+     * @param outputFileName, which is a txt file to write output
      */
     public UserInteraction(String dictToRead, String spellCheckFileName, String outputFileName){
         wr = new WordRecommender(dictToRead);
@@ -200,8 +206,7 @@ public class UserInteraction{
     }
 
     /**
-     * run the recommender
-     * @param spellCheckFileName a file that needs to be checked for spelling, no punctuations
+     * run the recommender file
      */
     public void runInteraction(){
         //read dictionary as ArrayList first
