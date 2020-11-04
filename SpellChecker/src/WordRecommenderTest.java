@@ -127,7 +127,7 @@ class WordRecommenderTest {
         ArrayList<String> resultTest = wrSimple.getWordSuggestions("xixi",3,0.3,3);
         String[] test = new String[]{""};
 
-        assertEquals("[]", Arrays.toString(resultTest.toArray()));
+        assertEquals(Arrays.toString(test), Arrays.toString(resultTest.toArray()));
     }
 
     @Test
@@ -137,7 +137,6 @@ class WordRecommenderTest {
 
         assertEquals(Arrays.toString(test), Arrays.toString(resultTest.toArray()));
     }
-
 
     @Test
     void testGetWordSuggestionSimple2(){
