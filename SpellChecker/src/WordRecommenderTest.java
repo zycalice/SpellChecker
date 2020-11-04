@@ -163,9 +163,4 @@ class WordRecommenderTest {
         assertEquals(Arrays.toString(test), Arrays.toString(resultTest.toArray()));
     }
 
-    @Test
-    void testReadDictionary(){
-
-    }
-
 }
