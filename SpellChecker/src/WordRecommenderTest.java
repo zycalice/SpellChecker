@@ -155,13 +155,6 @@ class WordRecommenderTest {
         assertEquals(Arrays.toString(test), Arrays.toString(resultTest.toArray()));
     }
 
-    @Test
-    void testGetWordSuggestionSimple4(){
-        ArrayList<String> resultTest = wrSimple.getWordSuggestions("fille",3,0.5,10);
-        String[] test = new String[]{"file", "filing"};
-
-        assertEquals(Arrays.toString(test), Arrays.toString(resultTest.toArray()));
-    }
 
     @Test
     void testGetWordSuggestion0(){

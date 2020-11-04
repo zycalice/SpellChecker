@@ -6,8 +6,7 @@ import java.util.*;
 
 public class WordRecommender {
 
-    final String dictionary ;
-    final ArrayList<String> dictionaryWords;
+    Dictionary dict;
     private int toleranceInput;
     private double commonPercentInput;
     private int topNInput;
@@ -17,52 +16,8 @@ public class WordRecommender {
      * @param fileName, which is a dictionary
      */
     public WordRecommender(String fileName){
-        dictionary = fileName;
-        dictionaryWords = readDictionary(fileName);
-    }
-
-    /**
-     * method to read in the dictionary; make sure the file path exist
-     * make sure the dictionaryFileName input is in the right path; if error, check the current path
-     * @return string array of all the words in the dictionary
-     */    
-    public ArrayList<String> readDictionary(String dictionaryFileName){
-        //read dictionary as ArrayList first
-        File f = new File (dictionaryFileName);
-        Scanner fileScanner;
-        ArrayList<String> dictList = new ArrayList<>();
-
-        //try reading the file; if file does not exist, print a msg and print the current path
-        {
-            try {
-                fileScanner = new Scanner(f);
-                while (fileScanner.hasNextLine()){
-                    dictList.add(fileScanner.nextLine());
-                }
-            } catch (FileNotFoundException e) {
-                System.out.println("bad file name; current path is" + f.getAbsolutePath());
-                e.printStackTrace();
-            }
-        }
-
-        //convert to string array
-        return dictList;
-    }
-
-    /**
-     * get name of the dictionary file
-     * @return the name of the dictionary file
-     */
-    public String getDictionary(){
-        return dictionary;
-    }
-
-    /**
-     * get all words in the dictionary file
-     * @return dictionary in String array form
-     */
-    public ArrayList<String> getDicWords(){
-        return dictionaryWords;
+        dict= new Dictionary(fileName);
+        dict.readDict();
     }
 
     /**
@@ -191,7 +146,7 @@ public class WordRecommender {
         int lower = Math.max(0,word.length()-tolerance);
 
         //filter for tolerance and commonPercent requirements
-        for (String dictionaryWord : dictionaryWords) {
+        for (String dictionaryWord : dict.getDictionaryWords()) {
             double com = getCommon(word, dictionaryWord);
             int leng = dictionaryWord.length();
             if (leng <= upper && leng >= lower && com >= commonPercent) {
@@ -424,7 +379,7 @@ public class WordRecommender {
                 while (fileScanner.hasNext()) {
                     String word = fileScanner.next();
                     String newWord = word;
-                    if (!dictionaryWords.contains(word)){
+                    if (!dict.getDictionaryWords().contains(word)){
                         newWord = userDecision(word);
                     }
                     pw.write(newWord + " ");
