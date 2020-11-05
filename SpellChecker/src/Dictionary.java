@@ -36,7 +36,9 @@ public class Dictionary {
                     dictList.add(fileScanner.nextLine());
                 }
             } catch (FileNotFoundException e) {
-                System.out.println("bad file name; current path is" + f.getAbsolutePath());
+                System.out.println("Bad file name; The current path is" + f.getAbsolutePath() +
+                        ". Make sure the path is correct, " +
+                        "and make sure you also include .txt in the input file names.");
                 e.printStackTrace();
             }
         }
